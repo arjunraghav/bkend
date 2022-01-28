@@ -1,0 +1,37 @@
+{% extends './base.html' %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+
+
+<div class="container-fluid">
+<div class="d-flex align-items-center py-5">
+<div class="col-12 col-md-6 col-lg-4 mx-auto">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title text-center">Login</h5>
+      <hr>
+      {% for x in form %}
+      <ul>
+      <div class="form-outline">
+        {% render_field x class="form-control" %}
+        <label class="form-label" for="typeEmail">{{ x.label }}</label>
+        <p class="font-italic text-muted">{{ x.help_text }}</p>
+      </div>
+    </ul>
+      {% endfor %}
+
+      <input type="submit" value="Login" class="btn btn-primary w-100 mb-2">
+      
+      <a href="#" class=""><i class="fas fa-user-plus"></i> Don't have an account? Register</a>
+
+    </div>
+  </div>
+</div>
+</div>
+ 
+</form>
+{% endblock content %}
