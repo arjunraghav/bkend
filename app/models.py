@@ -7,7 +7,7 @@ from .managers import CustomUserManager
 
 def filename_naming_handler(instance, filename):
     extension = filename.split('.')[-1]
-    return f"upload-ID-{instance.user_id}-{instance.title}-{instance.timestamp}.{extension}"
+    return f"upload-ID-{instance.user.id}-{instance.title}-{instance.timestamp}.{extension}"
 
 
 class CustomUser(AbstractUser):
@@ -25,10 +25,10 @@ class CustomUser(AbstractUser):
 class UserFile(models.Model):
 
     id = models.AutoField(primary_key=True)
-    user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=32)
     timestamp = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to=filename_naming_handler)
 
     def __str__(self):
-        return f"upload-ID-{self.user_id}-{self.title}-{self.timestamp}"
+        return f"upload-ID-{self.user.id}-{self.title}-{self.timestamp}"
