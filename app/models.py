@@ -5,7 +5,7 @@ from .managers import CustomUserManager
 # Create your models here.
 
 
-def filename_naming_handler(instance, filename):
+def filename_renaming_handler(instance, filename):
     extension = filename.split('.')[-1]
     return f"upload-ID-{instance.user.id}-{instance.title}-{instance.timestamp}.{extension}"
 
@@ -28,7 +28,7 @@ class UserFile(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=32)
     timestamp = models.DateTimeField(auto_now_add=True)
-    file = models.FileField(upload_to=filename_naming_handler)
+    file = models.FileField(upload_to=filename_renaming_handler)
 
     def __str__(self):
         return f"upload-ID-{self.user.id}-{self.title}-{self.timestamp}"
